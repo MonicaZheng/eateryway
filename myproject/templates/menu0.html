@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.card-columns {
+    column-count: 3;
+}
+</style>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-10 mx-auto col-12 text-center mb-3">
+              <h1 class="mt-0 text-primary">Our Menu</h1>
+              <p class="lead">We take pride in our work, and it shows. Every time you order a beverage from us, we guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan Cappuccino, a refreshing iced herbal tea, or something as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p>
+          </div>
+          <div class="col-12 mt-4">
+              <h3 class="text-center">COFFEES & TEAS</h3>
+              <hr class="accent my-5">
+          </div>
+          <div class="card-columns">
+            {% for item in cof_tea_items.items %}
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">${{ item.unit_price }}</span>
+                  <h6 class="text-truncate">{{ item.name }}</h6>
+                  <p class="small">{{ item.description }}</p>
+              </div>
+            {% endfor %}
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$10</span>
+                  <h6 class="text-truncate">Chocolate</h6>
+                  <p class="small">Dark Chocolate, Smoke, Nuts</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$9</span>
+                  <h6 class="text-truncate">Matcha Green Tea Latte</h6>
+                  <p class="small">Smooth and creamy matcha is lightly sweetened and served with steamed milk.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$9</span>
+                  <h6 class="text-truncate">Chai Tea</h6>
+                  <p class="small">Black tea infused with warm clove, cardamom, cinnamon & ginger notes.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$10</span>
+                  <h6 class="text-truncate">Prickly Pear</h6>
+                  <p class="small">New Amsterdam Vodka and Pear liquer in a sugar rimmed glass.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$9</span>
+                  <h6>Classic Martini</h6>
+                  <p class="small">Seagrams Gin, Dry Vermouth, pickle juice, olive juice.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$10</span>
+                  <h6 class="text-truncate">Ruby Red Rosemary Refresher</h6>
+                  <p class="small">House infused rosemary vodka, St. Germaine Elderflower liqueur, grapefruit juice and a splash of soda.</p>
+              </div>
+          </div>
+          <div class="col-12 mt-4">
+              <h3 class="text-center">BAKERY & KITCHEN</h3>
+              <hr class="accent my-5">
+          </div>
+          <div class="card-columns">
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$9.95</span>
+                  <h6 class="text-truncate">Fried Shrimp</h6>
+                  <p class="small">Sustainably raised Argentine red shrimp, fried golden brown and served with chipotle mayonnaise for dipping.</p>
+                  <span class="font-weight-bold small">Add marinara or tartar: $2</span>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$8.95</span>
+                  <h6 class="text-truncate">Tuscan Bruschetta</h6>
+                  <p class="small">Crusty sliced Italian bread topped with basil, extra virgin olive oil, chopped tomatoes, garlic and fresh mozzarella cheese. Baked until it is nice and crispy and served with a side of balsamic reduction.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$7.95</span>
+                  <h6 class="text-truncate">Quesadilla</h6>
+                  <p class="small">Jack and cheddar cheese, chopped mild green chilies in a pan grilled flour tortilla. Served with sour cream, guacamole and fresh pico de gallo.</p>
+                  <div class="font-weight-bold small">Add Chili: $2</div>
+                  <div class="font-weight-bold small">Add BBQ Pulled Pork: $2</div>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$9.95</span>
+                  <h6 class="text-truncate">Chonga Bagel</h6>
+                  <p class="small">A bagel topped with Cheddar cheese, poppy seeds, sesame seeds, onion and garlic.</p>
+                  <div class="font-weight-bold small">Sesame</div>
+                  <div class="font-weight-bold small">Sugar</div>
+                  <div class="font-weight-bold small">Roasted</div>
+                  <div class="font-weight-bold small">Mint</div>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$8.95</span>
+                  <h6 class="text-truncate">Ultimate Nacho Platter</h6>
+                  <p class="small">
+                      House made corn tortilla chips, melted cheddar-Jack cheese, mild Anaheim chile salsa, refried beans, guacamole &amp; sour cream</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$10</span>
+                  <h6 class="text-truncate">Cheese Danish</h6>
+                  <p class="small">A flaky pastry folded around reduced-fat cream cheese.</p>
+              </div>
+          </div>
+          <div class="col-12 mt-4">
+              <h3 class="text-center">BULK SPECIALITY BLENDS</h3>
+              <hr class="accent my-5">
+          </div>
+          <div class="card-columns">
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$17.95</span>
+                  <h6 class="text-underline">TANZANIA</h6>
+                  <p class="small">Tanzanian coffee may not have garnered as much attention as fellow African countries like Kenya and Ethiopia, but there is plenty of stellar coffee to be had from its producers.</p>
+                  <span class="font-weight-bold small"></span>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$25.95</span>
+                  <h6>PERU</h6>
+                  <p class="small">
+                      As a coffee origin, Peru is inspiring for the way in which it’s pushed its way into the limelight over the past decade. Historically overshadowed by neighboring Colombia and Brazil, Peruvian farmers were not to be outdone.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$15.95</span>
+                  <h6>ETHIOPIA</h6>
+                  <p class="small">
+                      The Nano Challa washing station produces some of the most celebrated coffee in all of Western Ethiopia. Intense, lively, and sparkling — these offerings exemplify what makes Ethiopian coffees so wonderful.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$12.95</span>
+                  <h6>Stuffed Jumbo Shrimp</h6>
+                  <p class="small">
+                      Crabmeat, chopped scallops, mushrooms, Jack cheese, seasoned bread crumbs, white wine and butter stuffing.
+                  </p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$25.95</span>
+                  <h6>Sirloin Steak Tips</h6>
+                  <p class="small">
+                      Chunks of tender, flavorful marinated sirloin sautéed with garlic and black pepper, finished with button mushrooms and a beef demi-glace. (Degree of doneness will vary slightly due to variations in size of chunks). Accompanied by Gorgonzola spiked garlic
+                      smashed potatoes. Served with choice of additional side.</p>
+              </div>
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold">$14.95</span>
+                  <h6>Pasta Pomodoro</h6>
+                  <p class="small">
+                      Fresh roasted garlic rigatoni with a light sauce of extra virgin California olive oil, fresh chopped tomatoes, basil, garlic, black pepper and a dash of crushed red pepper. Garnished with sun dried tomatoes and shaved parmesan.
+                  </p>
+              </div>
+          </div>
+          <div class="col-12 mt-4">
+              <hr class="accent my-5">
+          </div>
+          <div class="col-6 mx-auto">
+              <div class="card card-body text-center">
+                  <h5 class="text-uppercase">Limited!</h5>
+                  <h6>Cold Brew</h6>
+                  <p class="small">caramel, chocolate, citrus, and floral</p>
+                  <span class="float-right font-weight-bold">$7</span>
+              </div>
+          </div>
+          <div class="col-12 mt-4">
+              <hr class="accent my-5">
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

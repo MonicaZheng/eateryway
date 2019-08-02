@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="page-section about-heading">
+  <div class="container">
+    <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{{ url_for('static', filename='img/counter-01.jpg') }}" alt="">
+    <div class="about-heading-content">
+      <div class="bg-faded rounded p-5">
+        <div class="row">
+          <div class="col-sm">
+            <div class="card text-center" style="width: 18rem;">
+              <div class="card-body">
+                <h4 class="card-title"><img src="https://img.icons8.com/windows/32/000000/pickup.png"> Pick-Up</h4>
+                <a href="{{url_for('pick_up')}}" class="btn btn-primary stretched-link btn-sm"><b>></b></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="card text-center" style="width: 18rem;">
+              <div class="card-body">
+                <h4 class="card-title"><img src="https://img.icons8.com/windows/32/000000/in-transit.png"> Delivey</h4>
+                <a href="{{url_for('delivery')}}" class="btn btn-primary stretched-link btn-sm">></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="card text-center" style="width: 18rem;">
+              <div class="card-body">
+                <h4 class="card-title"><img src="https://img.icons8.com/wired/32/000000/tableware.png"> Catering</h4>
+                <a href="{{url_for('catering')}}" class="btn btn-primary stretched-link btn-sm">></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="card bg-light p-3 text-center">
+    <div class="card-body">
+      <h4 class="card-title">Rewards Membership</h4>
+      <h5 class="card-text">We are about to launching our Rewards Program. Stay tuned😃</h5>
+      <br>
+      <a href="#" class="btn btn-info">Learn More</a>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+{% endblock %}

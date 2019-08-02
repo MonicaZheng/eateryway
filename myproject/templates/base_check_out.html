@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+</style>
+
+<head>
+
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Check out CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/check-out-validation.css') }}">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- Check out JS -->
+    <script src="{{ url_for('static', filename='js/check-out-validation.js') }}"></script>
+
+
+</head>
+
+<body>
+
+    {% for mess in get_flashed_messages() %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="fade close" data-dismissible="alert" aria-label="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          {{mess}}
+      </div>
+    {% endfor %}
+
+    <div class="wrapper">
+
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="location.href='{{ url_for('menu') }}'">
+                        <i class="fas fa-align-left"></i>
+                        <span>Back To Menu</span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active px-lg-4">
+                          <a class="nav-link text-uppercase text-expanded" href="{{ url_for('home') }}">Home
+                            <span class="sr-only">(current)</span>
+                          </a>
+                        </li>
+                        <li class="nav-item px-lg-4">
+                          <a class="nav-link text-uppercase text-expanded" href="{{ url_for('order') }}">Order Now</a>
+                        </li>
+                        <li class="nav-item px-lg-4">
+                          <a class="nav-link text-uppercase text-expanded" href="{{ url_for('about') }}">About</a>
+                        </li>
+                        <li class="nav-item px-lg-4">
+                          <a class="nav-link text-uppercase text-expanded" href="{{ url_for('products') }}">Products</a>
+                        </li>
+                        <li class="nav-item px-lg-4">
+                          <a class="nav-link text-uppercase text-expanded" href="{{ url_for('store') }}">Store</a>
+                        </li>
+                        <li class="nav-item px-lg-4">
+                          <div class="btn-group" role="group" aria-label="Basic example">
+                            {% if current_user.is_authenticated %}
+                            <a class="btn btn-outline-primary" href="{{ url_for('logout') }}">LogOut</a>
+                            {% else %}
+                            <a class="btn btn-outline-primary" href="{{ url_for('login') }}">LogIn/Register</a>
+                            {% endif %}
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+            </nav>
+
+{% block content %}
+
+
+{% endblock %}
+
+        </div>
+    </div>
+
+<div class="overlay"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#dismiss, .overlay').on('click', function () {
+            $('#sidebar').removeClass('active');
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+</script>
+
+<script>
+      var geocoder;
+      var map;
+      var address = "{{session['delivery_location']}}";
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        geocoder = new google.maps.Geocoder();
+        codeAddress(geocoder, map);
+      }
+
+      function codeAddress(geocoder, map) {
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=?&callback=initMap">
+</script>
+
+
+<footer class="footer text-faded text-center py-5">
+  <div class="container">
+    <p class="m-0 small">Copyright &copy; Yangmei Zheng. App Icon by <a href="https://icons8.com/">Icons8</a></p>
+  </div>
+</footer>
+</body>
+
+</html>

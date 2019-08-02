@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.map-container{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+</style>
+
+<div class="jumbotron jumbotron-fluid">
+  <h1 class="h4 mb-3 font-weight-normal text-center">Select Order Pick-Up Location</h1>
+  <div class="container">
+    <form action="{{ url_for('pick_up') }}" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <!--Google map-->
+            <div id="map-container-google-1" class="z-depth-1-half map-container">
+              <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                style="border:0" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-body">
+              <h5 class="card-title">NYC Midtown Store</h5>
+              <p class="card-text">30 Rockefeller Plaza, New York, NY 10112</p>
+              <p class="card-text"><small class="text-muted">Open unitl 8:00PM EST Today</small></p>
+              <button class="btn btn-primary btn-sm" name="store" type="submit" value="nyc">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <!--Google map-->
+            <div id="map-container-google-1" class="z-depth-1-half map-container">
+              <iframe src="https://maps.google.com/maps?q=chicago&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                style="border:0" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-body">
+              <h5 class="card-title">Chicago Loop Store</h5>
+              <p class="card-text">233 S Wacker Dr, Chicago, IL 60606</p>
+              <p class="card-text"><small class="text-muted">Open unitl 7:00PM CST Today</small></p>
+              <button class="btn btn-primary btn-sm" name="store" type="submit" value="chicago">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends "base_check_out.html" %}
+{% block content %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Your cart</span>
+        <span class="badge badge-secondary badge-pill">{{ num_items }}</span>
+      </h4>
+      <ul class="list-group mb-3">
+        {% for item in cart %}
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0">{{ item["name"] }}</h6>
+            <small class="text-muted">Qt: {{ item["quantity"] }}</small>
+          </div>
+          <span class="text-muted">${{ item["price"] }}</span>
+        </li>
+        {% endfor %}
+        <li class="list-group-item d-flex justify-content-between bg-light">
+          <div class="text-success">
+            <h6 class="my-0">Promo code</h6>
+            <small>EXAMPLECODE</small>
+          </div>
+          <span class="text-success">-$5</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Total</span>
+          <strong>${{total_price}}</strong>
+        </li>
+      </ul>
+
+      <form class="card p-2">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Promo code">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-secondary">Redeem</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">Method</h4>
+          {% if session["pk_location"] %}
+            <h6>Pick Up</h6>
+            {% if session["pk_location"]=="nyc" %}
+            <div class="card">
+              <div class="row no-gutters">
+                <div>
+                  <!--Google map-->
+                  <div id="map-container-google-1" class="z-depth-1-half map-container">
+                    <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                      style="border:0" allowfullscreen></iframe>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="card-body">
+                    <h5 class="card-title">NYC Midtown Store</h5>
+                    <p class="card-text">30 Rockefeller Plaza, New York, NY 10112</p>
+                    <p class="card-text"><small class="text-muted">Open unitl 8:00PM EST Today</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="card">
+              <div class="row no-gutters">
+                <div>
+                  <!--Google map-->
+                  <div id="map-container-google-1" class="z-depth-1-half map-container">
+                    <iframe src="https://maps.google.com/maps?q=chicago&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                      style="border:0" allowfullscreen></iframe>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="card-body">
+                    <h5 class="card-title">Chicago Loop Store</h5>
+                    <p class="card-text">233 S Wacker Dr, Chicago, IL 60606</p>
+                    <p class="card-text"><small class="text-muted">Open unitl 7:00PM CST Today</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          {% else %}
+            <h6>Delivey</h6>
+            <center>
+              <p>{{session['delivery_location']}}, {{session['apt_num']}}</p>
+            </center>
+            <div id="map"></div>
+          {% endif %}
+        <hr class="mb-4">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="save-info">
+          <label class="custom-control-label" for="save-info">Save this information for next time</label>
+        </div>
+        <hr class="mb-4">
+
+        <h4 class="mb-3">Payment</h4>
+        <form class="needs-validation" novalidate>
+        <div class="d-block my-3">
+          <div class="custom-control custom-radio">
+            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+            <label class="custom-control-label" for="credit">Credit card</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+            <label class="custom-control-label" for="debit">Debit card</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+            <label class="custom-control-label" for="paypal">PayPal</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="cc-name">Name on card</label>
+            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+            <small class="text-muted">Full name as displayed on card</small>
+            <div class="invalid-feedback">
+              Name on card is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="cc-number">Credit card number</label>
+            <input type="text" class="form-control" id="cc-number" placeholder="" required>
+            <div class="invalid-feedback">
+              Credit card number is required
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="cc-expiration">Expiration</label>
+            <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+            <div class="invalid-feedback">
+              Expiration date required
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="cc-cvv">CVV</label>
+            <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+            <div class="invalid-feedback">
+              Security code required
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="cc-zip">Billing Zip</label>
+            <input type="text" class="form-control" id="cc-zip" placeholder="" required>
+            <div class="invalid-feedback">
+              Billing zip code required
+            </div>
+          </div>
+        </div>
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+      </form>
+    </div>
+  </div>
+  <footer class="footer text-faded text-center py-5">
+      <div class="container">
+        <p class="m-0 small">Copyright &copy; Yangmei Zheng. App Icon by <a href="https://icons8.com/">Icons8</a></p>
+      </div>
+  </footer>
+</div>
+
+
+{% endblock %}

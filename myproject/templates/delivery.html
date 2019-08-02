@@ -1,0 +1,70 @@
+{% extends "base_delivery.html" %}
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+
+    <form class="form-inline" action="{{ url_for('delivery') }}" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="col-sm">
+          <div class="card text-center">
+            <div class="card-body">
+              <h4 class="card-title"><img src="https://img.icons8.com/ios/32/000000/map-pin.png">Enther Your Address</h4>
+              <center>
+                <div id="locationField" onchange="show_apt_input()">
+                  <input name="autocomplete" id="autocomplete"
+                     placeholder="Enter your address"
+                     onFocus="geolocate()"
+                     type="text" class="form-control">
+                </div>
+                <br>
+                <div id="apt_input" style="width: 18rem;display: none">
+                  <input type="text" class="form-control" name="apt_num" id="apt_num" placeholder="Apt No.(optional)"/>
+                  <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+                </div>
+              </center>
+
+              <table id="address" style="display:none">
+                <tr>
+                  <td class="label">Street address</td>
+                  <td class="slimField"><input class="field" name="street_number" id="street_number" disabled="true"/></td>
+                  <td class="wideField" colspan="2"><input class="field" name="route" id="route" disabled="true"/></td>
+                </tr>
+                <tr>
+                  <td class="label">City</td>
+                  <td class="wideField" colspan="3"><input class="field" name="locality" id="locality" disabled="true"/></td>
+                </tr>
+                <tr>
+                  <td class="label">State</td>
+                  <td class="slimField"><input class="field" name="administrative_area_level_1" id="administrative_area_level_1" disabled="true"/></td>
+                  <td class="label">Zip code</td>
+                  <td class="wideField"><input class="field" name="postal_code" id="postal_code" disabled="true"/></td>
+                </tr>
+                <tr>
+                  <td class="label">Country</td>
+                  <td class="wideField" colspan="3"><input class="field" name="country" id="country" disabled="true"/></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+    </form>
+    <br>
+
+  </div>
+</div>
+
+<script>
+function show_apt_input() {
+  var x = document.getElementById("apt_input");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  }
+  // else {
+  //   x.style.display = "none";
+  // }
+}
+</script>
+
+{% endblock %}

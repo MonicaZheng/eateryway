@@ -1,0 +1,209 @@
+{% extends "base_order.html" %}
+{% block content %}
+
+<style>
+.card-columns {
+    column-count: 3;
+}
+
+a.custom-card,
+a.custom-card:hover {
+  color: inherit;
+}
+</style>
+
+  <div class="col-lg-10 mx-auto col-12 text-center mb-3">
+      <h1 class="mt-0 text-primary">Our Menu</h1>
+      <p class="lead">We take pride in our work, and it shows. Every time you order a beverage from us, we guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan Cappuccino, a refreshing iced herbal tea, or something as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p>
+  </div>
+  <div class="container">
+    <br>
+      <div class="row">
+          <br>
+          <div class="col-12 mt-4">
+              <h3 class="text-center">COFFEES & TEAS</h3>
+              <hr class="accent my-5">
+          </div>
+          <div class="card-columns">
+            {% for item in cof_tea_items %}
+            <a href="#AddFood" class="custom-card open-AddFood" data-id="{{ item.id }}" data-toggle="modal">
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold" id="price_{{item.id}}">${{ item.unit_price }}</span>
+                  <h6 class="text-truncate" id="name_{{item.id}}">{{ item.name }}</h6>
+                  <p class="small" id="descp_{{item.id}}">{{ item.description }}</p>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <div class="col-12 mt-4">
+              <h3 class="text-center">BAKERY & KITCHEN</h3>
+              <hr class="accent my-5">
+          </div>
+          <div class="card-columns">
+            {% for item in baked_items %}
+            <a href="#AddFood" class="custom-card open-AddFood" data-id="{{ item.id }}" data-toggle="modal">
+              <div class="card card-body">
+                  <span class="float-right font-weight-bold" id="price_{{item.id}}">${{ item.unit_price }}</span>
+                  <h6 class="text-truncate" id="name_{{item.id}}">{{ item.name }}</h6>
+                  <p class="small" id="descp_{{item.id}}">{{ item.description }}</p>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <div class="col-12 mt-4">
+              <h3 class="text-center">BULK SPECIALITY BLENDS</h3>
+              <hr class="accent my-5">
+          </div>
+          <div class="card-columns">
+            {% for item in blend_items %}
+            <a href="#AddFood" class="custom-card open-AddFood" data-id="{{ item.id }}" data-toggle="modal">
+              <div class="card card-body" class="card-img-top" alt="...">
+                  <span class="float-right font-weight-bold" id="price_{{item.id}}">${{ item.unit_price }}</span>
+                  <h6 class="text-truncate" id="name_{{item.id}}">{{ item.name }}</h6>
+                  <p class="small" id="descp_{{item.id}}">{{ item.description }}</p>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <div class="col-12 mt-4">
+              <hr class="accent my-5">
+          </div>
+          <div class="col-6 mx-auto">
+              <div class="card card-body text-center">
+                  <h5 class="text-uppercase">Limited!</h5>
+                  <h6>Cold Brew</h6>
+                  <p class="small">caramel, chocolate, citrus, and floral</p>
+                  <span class="float-right font-weight-bold">$7</span>
+              </div>
+          </div>
+          <div class="col-12 mt-4">
+              <hr class="accent my-5">
+          </div>
+      </div>
+      <footer class="footer text-faded text-center py-5">
+        <div class="container">
+          <p class="m-0 small">Copyright &copy; Yangmei Zheng. App Icon by <a href="https://icons8.com/">Icons8</a></p>
+        </div>
+      </footer>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="AddFood" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Make Selection</h5>
+        <button class="close" data-dismiss="modal"aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <img src="https://img.icons8.com/ultraviolet/100/000000/full-image.png">
+          <h3 id="food_name"></h3>
+          <p id="food_descp"></p>
+          <p hidden id="food_price"></p>
+          <p hidden id="food_id"></p>
+          <p>Qt: <input onchange="change_qt('quantity')" type="number" id="quantity" min="1" max="99" step="1" size="2" value="1"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="add_btn">Add to cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+function cart_list(items){
+
+  var itemHTML = '';
+
+  for (var item of items){
+    itemHTML += '<hr>'+'<div class="container"><div class="row"><div class="col-sm"><h6 class="card-subtitle mb-2">'+item['name']+" $"+item['price']+'</h6></div>'+'<div class="col-sm">Qt: <input onchange="change_qt('+"'quantity_cart_"+item['item_id']+"'"+')" type="number" id="quantity_cart_'+item['item_id']+'" class="EditCart" data-id='+item["item_id"]+' min="1" max="99" step="1" size="2" value='+item['quantity']+'></div></div><a href="javascript:void(0);" class="card-link RemoveFood" role="button" data-id="'+item['item_id']+'">Remove</a></div>'
+
+  }
+  return itemHTML
+
+}
+
+$(document).on("click", ".open-AddFood", function () {
+     var item_id = $(this).data('id');
+     var name = document.getElementById("name_".concat(item_id)).innerHTML;
+     var price = document.getElementById("price_".concat(item_id)).innerHTML;
+     var description = document.getElementById("descp_".concat(item_id)).innerHTML;
+     document.getElementById("food_id").innerHTML = item_id
+     document.getElementById("food_name").innerHTML = name
+     document.getElementById("food_price").innerHTML = price
+     document.getElementById("food_descp").innerHTML = description
+     // $(".modal-body #description").val( myBookId );
+     // As pointed out in comments,
+     // it is unnecessary to have to manually call the modal.
+     // $('#addBookDialog').modal('show');
+});
+
+function change_qt(id) {
+  console.log(id)
+    var qt = document.getElementById(id);
+    qt.value = parseInt(qt.value)
+
+    if (qt.value.length > 2) {
+        qt.value = 99;
+    }
+    if (qt.value < 1) {
+    qt.value = 1;
+    }
+}
+
+
+var add_btn = document.getElementById("add_btn")
+add_btn.onclick = function() {
+  var item_id = document.getElementById("food_id").innerHTML;
+  var name = document.getElementById("food_name").innerHTML;
+  var price = document.getElementById("food_price").innerHTML;
+  $.getJSON("./_add_cart", {
+    item_id: item_id,
+    name: name,
+    price: price,
+    quantity: $("#quantity").val()
+  }, function(data){
+    console.log(data)
+    $("#total_price").html("Total: $"+data.total_price);
+    $("#view_cart").html(cart_list(data.cart_info));
+  })
+  document.getElementById("quantity").value = 1
+}
+
+$(document).on("change", ".EditCart", function () {
+    var item_id = $(this).attr('data-id');
+    var quantity = $(this).val();
+    console.log(quantity)
+    $.getJSON("./_edit_cart", {
+      item_id: item_id,
+      quantity: quantity
+    }, function(data){
+      console.log(data)
+      $("#total_price").html("Total: $"+data.total_price);
+      $("#view_cart").html(cart_list(data.cart_info));
+    })
+});
+
+$(document).on("click", ".RemoveFood", function () {
+    var item_id = $(this).attr('data-id');
+    $.getJSON("./_remove_cart", {
+      item_id: item_id,
+    }, function(data){
+      if (data.cart_info === undefined || data.cart_info.length == 0){
+        $("#total_price").html("Your cart is empty");
+        $("#view_cart").html(cart_list(data.cart_info));
+      }else{
+      $("#total_price").html("Total: $"+data.total_price);
+      $("#view_cart").html(cart_list(data.cart_info));
+      }
+    })
+});
+
+
+
+</script>
+{% endblock %}
