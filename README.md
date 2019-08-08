@@ -1,2 +1,2 @@
 # FoodOrder
-Check this app : (www.easteryway.com)
+Check this app : (www.eateryway.com)
